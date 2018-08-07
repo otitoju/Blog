@@ -7,6 +7,7 @@ const celebrityTable = new mongoose.Schema({
     company:String,
     backgroundinfo:String,
     yearstarted:Date,
-    picture:String
+    picture:String,
+    date:{type:Date, default:Date.now()}
 })
 module.exports = mongoose.model('celebrity', celebrityTable)

@@ -4,6 +4,7 @@ const postcontroller = require('../controllers/postController')
 const test = require('../controllers/testcontroller')
 const admin = require('../controllers/admincontroller')
 const campuscontroller = require('../controllers/campuscontroller')
+const celebritycontroller = require('../controllers/celebritycontroller')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -29,6 +30,9 @@ router.get('/getcampusgist', campuscontroller.getAllCampusGist)
 router.get('/getcampusgist/:id', campuscontroller.getSingleCampusGist)
 router.delete('/deletegist/:id', campuscontroller.deleteCampusGist)
 router.put('/updategist/:id', campuscontroller.updateCampusGist)
+
+//celebrity routes
+router.post('/celebritypost', celebritycontroller.createNewCelebrityInfo)
 
 router.post('/test', test.test)
 
