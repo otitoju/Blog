@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 const db = require('./configuration_folder/dbconfig')
+const routes = require('./routes/routes')
+app.use('/', routes)
 
 
 //port
