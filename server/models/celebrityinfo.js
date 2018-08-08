@@ -6,7 +6,7 @@ const celebrityTable = new mongoose.Schema({
     age:Number,
     company:String,
     backgroundinfo:String,
-    yearstarted:Date,
+    yearstarted:String,
     picture:String,
     date:{type:Date, default:Date.now()}
 })

@@ -33,6 +33,11 @@ router.put('/updategist/:id', campuscontroller.updateCampusGist)
 
 //celebrity routes
 router.post('/celebritypost', celebritycontroller.createNewCelebrityInfo)
+router.get('/getcelebritypost', celebritycontroller.getAllCelebrityPost)
+router.get('/getcelebritypost/:id', celebritycontroller.getSinglePost)
+router.put('updatecelebritypost/:id', celebritycontroller.updateCelebrityGist)
+router.delete('/deletecelebritypost/:id', celebritycontroller.deleteCelebrityGist)
+
 
 router.post('/test', test.test)
 
