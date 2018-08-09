@@ -4,7 +4,7 @@ const post = require('../models/post')
 // create post
 exports.createNewPost = async (req, res) => {
     const body = req.body
-    if(!body.title || !body.content || !body.author){
+    if(!body.title || !body.content){
         res.status(400).json({message:`Please ensure all fields are filled`})  
     }
     else {

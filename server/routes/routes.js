@@ -5,6 +5,8 @@ const test = require('../controllers/testcontroller')
 const admin = require('../controllers/admincontroller')
 const campuscontroller = require('../controllers/campuscontroller')
 const celebritycontroller = require('../controllers/celebritycontroller')
+const sportcontroller = require('../controllers/sportcontroller')
+const contact = require('../controllers/contactUs')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -38,6 +40,15 @@ router.get('/getcelebritypost/:id', celebritycontroller.getSinglePost)
 router.put('updatecelebritypost/:id', celebritycontroller.updateCelebrityGist)
 router.delete('/deletecelebritypost/:id', celebritycontroller.deleteCelebrityGist)
 
+//sport routes
+router.post('/sportpost', sportcontroller.createSportNews)
+router.get('/getsportnews', sportcontroller.getAllSportNews)
+router.get('/getsportnews/:id', sportcontroller.getSingleSportNews)
+router.put('/updatesport/:id', sportcontroller.updateSportNews)
+router.delete('/deletesport/:id', sportcontroller.deleteSportNews)
+
+//contact us routes
+router.post('/contactus', contact.contactUs)
 
 router.post('/test', test.test)
 
@@ -101,6 +112,50 @@ router.put('/campusimg/:id', upload.single('picture'), async(req, res) => {
         let imgUrl = result.secure_url
         let publicId = result.public_id
         const Response = await campus.findByIdAndUpdate(req.params.id,{
+            picture:imgUrl
+        }, {new:true})
+        res.json({
+            response:Response,
+            message:'Message: Picture uploaded successfully'
+        })
+    }
+    
+})
+//celebrity image uploader
+const celeb = require('../models/celebrityinfo')
+router.put('/celebrityimg/:id', upload.single('picture'), async(req, res) => {
+    var image = req.file.path
+    if(!image){
+        res.json({message:`Error: No file selected`})
+    }
+    else{
+        const result = await cloudinary.uploader.upload(image)
+        const img =  result.original_filename
+        let imgUrl = result.secure_url
+        let publicId = result.public_id
+        const Response = await celeb.findByIdAndUpdate(req.params.id,{
+            picture:imgUrl
+        }, {new:true})
+        res.json({
+            response:Response,
+            message:'Message: Picture uploaded successfully'
+        })
+    }
+    
+})
+//sport image uploader
+const sport = require('../models/sport')
+router.put('/sportimg/:id', upload.single('picture'), async(req, res) => {
+    var image = req.file.path
+    if(!image){
+        res.json({message:`Error: No file selected`})
+    }
+    else{
+        const result = await cloudinary.uploader.upload(image)
+        const img =  result.original_filename
+        let imgUrl = result.secure_url
+        let publicId = result.public_id
+        const Response = await sport.findByIdAndUpdate(req.params.id,{
             picture:imgUrl
         }, {new:true})
         res.json({
