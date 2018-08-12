@@ -38,7 +38,7 @@ exports.getSinglePost = async (req, res) => {
 }
 // Update a post
 exports.updatePost = (req, res) => {
-    post.findByIdAndUpdate(req.body.id, req.body, {new:true}, (err, post) => {
+    post.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, info) => {
         if(err) {
             res.status(500).json({
                 message:`An error occur updating post`
@@ -47,7 +47,7 @@ exports.updatePost = (req, res) => {
         else {
             res.status(200).json({
                 message:`Updated`,
-                post:post
+                post:info
             })
         }
     })
@@ -69,12 +69,70 @@ exports.deletePost = (req, res) => {
 }
 //comments
 exports.createComment = async(req, res) => {
-    const info = await post.create(req.params.id,{
-        comment:[
-            {
-                name:req.body.name,
-                comment:req.body.comment
-            }
-        ]
-    })
+    const info = await post.findOne({_id:req.params.id})
+    if(!info){
+        res.json({message:`Error:not found`})
+    }
+    else{
+       const result = await post.create({
+            name:req.body.name,
+            comment:req.body.comment
+        })
+        res.json({
+            info:result
+        })
+    }
+    
 }
+exports.editPostById = async (req, res) => {
+    const { content, title } = req.body
+    const info = await post.findOne({ _id: req.params.id })
+    if(!info){
+      res.json({
+        message: 'Post not found!',
+        success: false
+      })
+    }
+    info.title = title || info.title
+    info.content = content || info.content
+    await info.save()
+    res.json({
+      message: 'Post updated successfully',
+      success: false,
+      info:info
+    })
+  }
+
+  exports.catchErrors = fn => {
+    return function (req, res, next) {
+      return fn(req, res, next).catch(next)
+    }
+  }
+  
+  exports.developmentErrors = (err, req, res, next) => {
+    err.stack = err.stack || ''
+    const errorDetails = {
+      message: err.message,
+      status: err.status,
+      stackHighlighted: err.stack.replace(
+        /[a-z_-\d]+.js:\d+:\d+/gi,
+        '<mark>$&</mark>'
+      )
+    }
+    res.status(err.status || 500)
+    res.format({
+      // Based on the `Accept` http header
+      'text/html': () => {
+        res.json(errorDetails)
+      }, // Form Submit, Reload the page
+      'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
+    })
+  }
+  
+  exports.productionErrors = (err, req, res, next) => {
+    res.status(err.status || 500)
+    res.json({
+      message: err.message,
+      error: {}
+    })
+  }

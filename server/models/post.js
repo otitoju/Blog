@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
+import mongodbErrorHandler from 'mongoose-mongodb-errors'
 const postSchema = new mongoose.Schema({
     title:String,
     content:String,
-    time:{type:Date, default:new Date(), timestamp: true},
     author:{type:String},
     picture:String,
     comments:[
@@ -11,5 +11,8 @@ const postSchema = new mongoose.Schema({
             comment:String
         }
     ]
-})
+},{
+    timestamps: true
+  })
+  postSchema.plugin(mongodbErrorHandler)
 module.exports = mongoose.model('post', postSchema)

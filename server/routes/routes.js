@@ -18,6 +18,8 @@ router.get('/getposts', postcontroller.getAllPost)
 router.get('/singlepost/:id', postcontroller.getSinglePost)
 router.put('/updatepost/:id', postcontroller.updatePost)
 router.delete('deletepost/:id', postcontroller.deletePost)
+router.put('/edit/:id', postcontroller.editPostById)
+router.post('/comments/:id', postcontroller.createComment)
 
 
 //admin routes
