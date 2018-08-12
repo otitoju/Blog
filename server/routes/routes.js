@@ -7,6 +7,7 @@ const campuscontroller = require('../controllers/campuscontroller')
 const celebritycontroller = require('../controllers/celebritycontroller')
 const sportcontroller = require('../controllers/sportcontroller')
 const contact = require('../controllers/contactUs')
+const commentcontroller = require('../controllers/commentcontroller')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -17,6 +18,7 @@ router.get('/getposts', postcontroller.getAllPost)
 router.get('/singlepost/:id', postcontroller.getSinglePost)
 router.put('/updatepost/:id', postcontroller.updatePost)
 router.delete('deletepost/:id', postcontroller.deletePost)
+
 
 //admin routes
 router.post('/reg', admin.registerUser)
@@ -49,7 +51,10 @@ router.delete('/deletesport/:id', sportcontroller.deleteSportNews)
 
 //contact us routes
 router.post('/contactus', contact.contactUs)
+//comment routes
+router.post('/comment', commentcontroller.createComment)
 
+//test
 router.post('/test', test.test)
 
 

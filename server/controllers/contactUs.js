@@ -24,4 +24,3 @@ exports.contactUs = (req, res) => {
         }
       })
     }
-}
