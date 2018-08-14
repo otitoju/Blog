@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
+
 const celebrityTable = new mongoose.Schema({
     fullname:String,
     stagename:String,
@@ -8,6 +10,9 @@ const celebrityTable = new mongoose.Schema({
     backgroundinfo:String,
     yearstarted:String,
     picture:String,
-    date:{type:Date, default:Date.now()}
+},
+{
+    timestamps:true
 })
+celebrityTable.plugin(mongodbErrorHandler)
 module.exports = mongoose.model('celebrity', celebrityTable)

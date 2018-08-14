@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
+
 const campusTable = new mongoose.Schema({
     title:String,
     content:String,
     school:String,
-    time:{type:Date, default:Date.now()},
     picture:String
+},
+{
+    timestamps:true
 })
+campusTable.plugin(mongodbErrorHandler)
 module.exports = mongoose.model('campusgist', campusTable)

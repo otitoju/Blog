@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
+
 const adminSchema = new mongoose.Schema({
     name:String,
     email:String,
@@ -6,4 +8,5 @@ const adminSchema = new mongoose.Schema({
     phone:Number,
     picture:String
 })
+adminSchema.plugin(mongodbErrorHandler)
 module.exports = mongoose.model('admin', adminSchema)
