@@ -26,7 +26,7 @@ router.post('/comments/:id', catchErrors(postcontroller.createComment))
 
 //admin routes
 router.post('/reg', catchErrors(admin.registerUser))
-router.post('/signin', catchErrors(admin.loginUser))
+router.post('/signin', admin.loginUser)
 router.get('/get', catchErrors(admin.getAllAdmin))
 router.get('/get/:id', catchErrors(admin.getSingleUser))
 router.put('/update/:id', catchErrors(admin.updateUser))
