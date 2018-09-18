@@ -9,6 +9,7 @@ const celebritycontroller = require('../controllers/celebritycontroller')
 const sportcontroller = require('../controllers/sportcontroller')
 const contact = require('../controllers/contactUs')
 const commentcontroller = require('../controllers/commentcontroller')
+const techcontroller = require('../controllers/techcontroller')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -21,8 +22,9 @@ router.get('/singlepost/:id', catchErrors(postcontroller.getSinglePost))
 router.put('/updatepost/:id', catchErrors(postcontroller.updatePost))
 router.delete('deletepost/:id', catchErrors(postcontroller.deletePost))
 router.put('/edit/:id', catchErrors(postcontroller.editPostById))
-router.post('/comments/:id', catchErrors(postcontroller.createComment))
-
+//router.post('/comment/add/:id', catchErrors(postcontroller.createComment))
+// router.get('/comm/:id', catchErrors(postcontroller.findComments))
+// router.put('/test/:id', catchErrors(postcontroller.testComment))
 
 //admin routes
 router.post('/reg', catchErrors(admin.registerUser))
@@ -58,8 +60,35 @@ router.post('/contactus', contact.contactUs)
 //comment routes
 router.post('/comment', commentcontroller.createComment)
 
+//technology routes
+router.post('/tech', catchErrors(techcontroller.newTechPost))
+router.get('/allpost', catchErrors(techcontroller.findAllTech))
+router.get('/tech/:id', catchErrors(techcontroller.findSingleTech))
+router.put('/edittech/:id', catchErrors(techcontroller.updateTechPost))
+router.delete('/deletetech/:id', catchErrors(techcontroller.deleteTechPost))
+
 //test
 router.post('/test', test.test)
+const Post = require('../models/post')
+router.post('/comment/add/:id', (req, res) => {
+    if(!req.body.name){
+        res.status(403).json({
+            message:'No empty field allowed'
+        })
+    }
+    else{
+        let article = new Post()
+        let query = {_id:req.params.id}
+        let comment = {
+            text:req.body.text
+        }
+        Post.addComment(query, comment, (err, article) => {
+            res.json({message:'successfully added comment'})
+        })
+    }
+})
+
+
 
 
 const storage = multer.diskStorage({

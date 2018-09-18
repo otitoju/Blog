@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const commentSchema = new mongoose.Schema({
-    _id:mongoose.Schema.Types.ObjectId,
-    time:{type:Date, default:Date.now()},
+    // _id:mongoose.Schema.Types.ObjectId,
+    // time:{type:Date, default:Date.now()},
     comment:String,
     name:String
 })

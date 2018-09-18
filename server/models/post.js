@@ -8,8 +8,9 @@ const postSchema = new mongoose.Schema({
     picture:String,
     comments:[
         {
-            name:String,
-            comment:String
+            text:{type:String},
+            created:{type:Date, default:Date.now()},
+            comment_by:{type:String, default:'anonymous'}
         }
     ]
 },{
@@ -17,3 +18,13 @@ const postSchema = new mongoose.Schema({
   })
 postSchema.plugin(mongodbErrorHandler)
 module.exports = mongoose.model('post', postSchema)
+const post = module.exports = mongoose.model('post', postSchema)
+
+module.exports.addComment = function(query, comment, callback){
+    post.update(query, {
+        $push:{
+            comments: comment
+        }
+    }, callback)
+
+}
