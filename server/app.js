@@ -2,10 +2,12 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+//const cors = require('cors')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 const db = require('./configuration_folder/dbconfig')
 const routes = require('./routes/routes')
+//app.use( cors())
 app.use('/', routes)
 const errorHandler = require('./handlers/errorHandler');
 const env = require('dotenv').config()
@@ -24,7 +26,9 @@ app.use(errorHandler.productionErrors);
 
 //port
 const port = process.env.PORT || 6000
-
+app.get('/', (req, res) => {
+    res.send('Blog server')
+})
 // Database connection
 mongoose.Promise = global.Promise
         mongoose.connect(db.mongoURI)

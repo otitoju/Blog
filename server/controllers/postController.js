@@ -19,7 +19,7 @@ exports.createNewPost = async (req, res) => {
         })
     }
 }
-// get all posts 
+// get all posts s
 exports.getAllPost = async (req, res) => {
     const allPost = await post.find().sort({'_id':-1})
     res.status(200).json({
@@ -110,21 +110,21 @@ exports.editPostById = async (req, res) => {
     })
   }
 
-// exports.createComment = (req, res) => {
-//     if(!req.body.name){
-//         res.status(403).json({
-//             message:'No empty field allowed'
-//         })
-//     }
-//     else{
-//         let article = new post()
-//         let query = {_id:req.params.id}
-//         let comment = {
-//             text:req.body.text
-//         }
-//         post.addComment(query, comment, (err, article) => {
-//             res.json({message:'successfully added comment'})
-//         })
-//     }
-// }
+exports.createComment = (req, res) => {
+    if(!req.body.text){
+        res.status(403).json({
+            message:'No empty field allowed'
+        })
+    }
+    else{
+        let article = new post()
+        let query = {_id:req.params.id}
+        let comment = {
+            text:req.body.text
+        }
+        post.addComment(query, comment, (err, article) => {
+            res.json({message:'successfully added comment'})
+        })
+    }
+}
  
